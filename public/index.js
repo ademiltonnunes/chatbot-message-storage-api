@@ -1,12 +1,4 @@
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyAoSf6DHooHE4elQ8GuzVA0e0swyUUz-Po",
-    authDomain: "quantumbotcore-c8c36.firebaseapp.com",
-    projectId: "quantumbotcore-c8c36",
-    storageBucket: "quantumbotcore-c8c36.appspot.com",
-    messagingSenderId: "764317389095",
-    appId: "1:764317389095:web:277fec96322ab98dfcd902"
-  };
+import firebaseConfig from './firebaseConfig.js';
   
   firebase.initializeApp(firebaseConfig);
   
