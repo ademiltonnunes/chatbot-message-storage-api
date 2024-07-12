@@ -1,6 +1,5 @@
-import firebaseConfig from './firebaseConfig.js';
-  
-  firebase.initializeApp(firebaseConfig);
+
+  firebase.initializeApp(window.firebaseConfig);
   
   // Generate login with user's email and password
   document.getElementById('login-form').addEventListener('submit', async (e) => {
