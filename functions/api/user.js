@@ -85,7 +85,20 @@ user.get("/email/:email", authenticate, async (req, res) => {
 // Endpoint to delete a user by uid
 user.delete("/:uid", authenticate, async (req, res) => {
   const {uid} = req.params;
+
   try {
+    // If the user deleted is the same as the authenticated user, revoke tokens
+    if (uid === req.user.uid) {
+      logger.log("User deleted is the same as the authenticated user");
+      await admin.auth().revokeRefreshTokens(uid);
+      logger.log("Refresh tokens revoked for user", uid);
+
+      await admin.auth().deleteUser(uid);
+      logger.log("User deleted successfully", uid);
+
+      return res.status(200).json({message: "User deleted successfully."});
+    }
+
     await admin.auth().deleteUser(uid);
     logger.log("User deleted successfully", uid);
 
@@ -102,8 +115,8 @@ user.delete("/:uid", authenticate, async (req, res) => {
 });
 
 // Endpoint to update a user"s email or password
-user.put("/:uid", async (req, res) => {
-  const {uid} = req.params;
+user.put("/", authenticate, async (req, res) => {
+  const {uid} = req.user;
   const {email, password} = req.body;
   const updateData = {};
 
