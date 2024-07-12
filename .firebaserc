@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "quantumbotcore-c8c36",
-    "test": "quantumbotcore-c8c36"
+    "default": "Project-Name",
+    "test": "Project-Name"
   }
 }
