@@ -2,15 +2,15 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccount.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccount)
 });
 
 // Import the functions from specific file
-const {addMessage} = require("./api/addMessage");
 const {user} = require("./api/user");
-const {generateToken} = require("./api/generateToken");
+const {startCoversation} = require("./api/startConversation");
+const {addMessage} = require("./api/addMessage");
 
 // Export the functions
-exports.addMessage = addMessage;
 exports.user = user;
-exports.generateToken = generateToken;
+exports.startCoversation = startCoversation;
+exports.addMessage = addMessage;

@@ -29,7 +29,7 @@ user.post("/", async (req, res) => {
         });
         logger.log("User created successfully", userRecord);
 
-        // Return the user id only
+        // Return the user uid only
         return res.status(201).json({
           message: "User created successfully",
           uid: userRecord.uid});
@@ -46,7 +46,7 @@ user.post("/", async (req, res) => {
   }
 });
 
-// Endpoint to list all users
+// Endpoint to list all users, to access it, user has to authenticate
 user.get("/", authenticate, async (req, res) => {
   try {
     // Get all users
@@ -64,39 +64,35 @@ user.get("/", authenticate, async (req, res) => {
   }
 });
 
-// Endpoint to get user by ID
-user.get("/:id", async (req, res) => {
-  const {id} = req.params;
+// Endpoint to get user by email
+user.get("/email/:email", authenticate, async (req, res) => {
+  const {email} = req.params;
+  logger.log("Email received: ", email);
   try {
-    // Get user by ID
-    const userRecord = await admin.auth().getUser(id);
-    logger.log("Retrieved user by ID", userRecord);
-
+    const userRecord = await admin.auth().getUserByEmail(email);
+    logger.log("User: ", userRecord);
     return res.status(200).json(userRecord.toJSON());
   } catch (error) {
     if (error.code === "auth/user-not-found") {
-      // if the user is not found by the id provided
-      logger.log("User not found", id);
+      logger.error("Error: ", error);
       return res.status(404).json({error: "User not found"});
     } else {
-      // Error getting user by ID
-      logger.error("Error getting user by ID:", error);
       return res.status(500).json({error: error.message});
     }
   }
 });
 
-// Endpoint to delete a user by ID
-user.delete("/:id", async (req, res) => {
-  const {id} = req.params;
+// Endpoint to delete a user by uid
+user.delete("/:uid", authenticate, async (req, res) => {
+  const {uid} = req.params;
   try {
-    await admin.auth().deleteUser(id);
-    logger.log("User deleted successfully", id);
+    await admin.auth().deleteUser(uid);
+    logger.log("User deleted successfully", uid);
 
     return res.status(200).json({message: "User deleted successfully"});
   } catch (error) {
     if (error.code === "auth/user-not-found") {
-      logger.log("User not found", id);
+      logger.log("User not found", uid);
       return res.status(404).json({error: "User not found"});
     } else {
       logger.error("Error deleting user:", error);
@@ -106,8 +102,8 @@ user.delete("/:id", async (req, res) => {
 });
 
 // Endpoint to update a user"s email or password
-user.put("/:id", async (req, res) => {
-  const {id} = req.params;
+user.put("/:uid", async (req, res) => {
+  const {uid} = req.params;
   const {email, password} = req.body;
   const updateData = {};
 
@@ -118,14 +114,14 @@ user.put("/:id", async (req, res) => {
     return res.status(400).json({message: "No data to update"});
   }
   try {
-    const userRecord = await admin.auth().updateUser(id, updateData);
+    const userRecord = await admin.auth().updateUser(uid, updateData);
     logger.log("User updated successfully", userRecord);
     return res.status(200).json({
       message: "User updated successfully",
       user: userRecord.toJSON()});
   } catch (error) {
     if (error.code === "auth/user-not-found") {
-      logger.log("User not found", id);
+      logger.log("User not found", uid);
       return res.status(404).json({error: "User not found"});
     } else {
       logger.error("Error updating user:", error);
