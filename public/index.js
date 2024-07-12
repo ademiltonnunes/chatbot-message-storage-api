@@ -1,5 +1,15 @@
 
-  firebase.initializeApp(window.firebaseConfig);
+const firebaseConfig = {
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
+  };
+
+
+  firebase.initializeApp(firebaseConfig);
   
   // Generate login with user's email and password
   document.getElementById('login-form').addEventListener('submit', async (e) => {
