@@ -69,4 +69,3 @@ node_modules/
 .dataconnect
 
 serviceAccount.json
-firebaseConfig.js
