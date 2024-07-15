@@ -1,0 +1,311 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Firebase Cloud Functions API Documentation
+  description: Documentation for Firebase Cloud Functions endpoints.
+
+basePath: "https://us-central1-quantum-bot-core-72974.cloudfunctions.net"  # Base path for your API
+
+paths:
+  /user:
+    post:
+      summary: Create a new user
+      description: Endpoint to create a new user with email and password.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: User email and password.
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        201:
+          description: User created successfully.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              uid:
+                type: string
+        400:
+          description: Invalid request. Missing required fields or incorrect data format.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+        403:
+          description: Unauthorized request. Missing or invalid authentication token.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+    get:
+      summary: Retrieve all users
+      description: Endpoint to retrieve a list of all users.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Successful response. List of users retrieved.
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                uid:
+                  type: string
+                email:
+                  type: string
+        403:
+          description: Unauthorized request. Missing or invalid authentication token.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+  /user/email/{email}:
+    get:
+      summary: Retrieve user by email
+      description: Endpoint to retrieve user details by email address.
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: User's email address.
+          type: string
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: User details retrieved successfully.
+          schema:
+            type: object
+            properties:
+              uid:
+                type: string
+              email:
+                type: string
+        400:
+          description: Invalid request. User not found or invalid email format.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+        403:
+          description: Unauthorized request. Missing or invalid authentication token.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+  /user/{uid}:
+    delete:
+      summary: Delete user by UID
+      description: Endpoint to delete a user by UID.
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: User's unique identifier.
+          type: string
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: User deleted successfully.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Invalid request. User not found or error deleting user.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+        403:
+          description: Unauthorized request. Missing or invalid authentication token.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+    put:
+      summary: Update user details
+      description: Endpoint to update user's email or password by UID.
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: User's unique identifier.
+          type: string
+        - name: body
+          in: body
+          required: true
+          description: User email or password to update.
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: User details updated successfully.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              user:
+                type: object
+                properties:
+                  uid:
+                    type: string
+                  email:
+                    type: string
+        400:
+          description: Invalid request. No data to update or user not found.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+        403:
+          description: Unauthorized request. Missing or invalid authentication token.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+    /user/logoff:
+      post:
+        summary: Logoff user
+        description: Endpoint to revoke user's authentication token.
+        security:
+          - BearerAuth: []
+        responses:
+          200:
+            description: User logged off successfully.
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+          403:
+            description: Unauthorized request. Missing or invalid authentication token.
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
+  /conversation:
+    post:
+      summary: Start a new conversation
+      description: Endpoint to start a new conversation for the authenticated user.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Conversation created successfully.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              conversationId:
+                type: string
+        403:
+          description: Unauthorized request. Missing or invalid authentication token.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+  /conversation/chats:
+    get:
+      summary: Retrieve conversations and messages
+      description: Endpoint to retrieve all conversations and their messages for the authenticated user.
+      parameters:
+        - name: date
+          in: query
+          required: false
+          description: Optional. Date to filter conversations (ISO 8601 format).
+          type: string
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Successful response. List of conversations and their messages.
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                conversationId:
+                  type: string
+                conversationData:
+                  type: object
+                  properties:
+                    uid:
+                      type: string
+                    startTime:
+                      type: string
+                  required:
+                    - uid
+                    - startTime
+                messages:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      uid:
+                        type: string
+                      role:
+                        type: string
+                      timestamp:
+                        type: string
+        400:
+          description: Invalid request. Invalid date format.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+        403:
+          description: Unauthorized request. Missing or invalid authentication token.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Use Bearer authentication token.
