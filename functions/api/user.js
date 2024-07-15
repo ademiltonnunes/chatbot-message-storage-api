@@ -153,10 +153,10 @@ user.post("/logoff", authenticate, async (req, res) => {
     await admin.auth().revokeRefreshTokens(uid);
     logger.log("User tokens revoked successfully for uid:", uid);
 
-    return res.status(200).json({ message: "User logged off successfully" });
+    return res.status(200).json({message: "User logged off successfully"});
   } catch (error) {
     logger.error("Error logging off user:", error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({error: error.message});
   }
 });
 

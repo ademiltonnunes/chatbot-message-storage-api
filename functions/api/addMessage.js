@@ -22,7 +22,7 @@ addMessage.post("/", authenticate, async (req, res) => {
           .log("Required fields (message, role or conversationId) are missing");
       return res.status(400).json({
         status: "error",
-        message: "Required fields (message, role or conversationId) are missing"});
+        message: "Required fields are missing"});
     }
 
     // Verify if role is user or system
@@ -34,17 +34,17 @@ addMessage.post("/", authenticate, async (req, res) => {
     }
     // Verify if the conversation exists for the user
     const conversationRef = await admin.firestore()
-    .collection("conversations")
-    .doc(uid)
-    .collection("userConversations")
-    .doc(conversationId)
-    .get();
+        .collection("conversations")
+        .doc(uid)
+        .collection("userConversations")
+        .doc(conversationId)
+        .get();
 
     if (!conversationRef.exists) {
       logger.log("Conversation not found or does not belong to the user");
       return res.status(404).json({
         status: "error",
-        message: "Conversation not found or does not belong to the user"
+        message: "Conversation not found or does not belong to the user",
       });
     }
 

@@ -11,7 +11,6 @@ const authLimiter = rateLimit({
 
 // Middleware to authenticate user
 exports.authenticate = [authLimiter, async (req, res, next) => {
-
   // Check if the ID token is passed in the Authorization header
   if (
     !req.headers.authorization ||
@@ -40,10 +39,9 @@ exports.authenticate = [authLimiter, async (req, res, next) => {
     // Add the user to the request object
     req.user = decodedToken;
 
-    logger.log("User authenticated", { uid: decodedToken.uid });
+    logger.log("User authenticated", {uid: decodedToken.uid});
     next();
   } catch (error) {
-
     // Verify if the ID token has expired
     if (error.code === "auth/id-token-expired") {
       logger.error("Unauthorized: ID token has expired");
@@ -52,7 +50,8 @@ exports.authenticate = [authLimiter, async (req, res, next) => {
       });
       // Verify if the ID token is invalid
     } else {
-      logger.error("Unauthorized: ID token is invalid", { error: error.message });
+      logger.error("Unauthorized: ID token is invalid",
+          {error: error.message});
       return res.status(403).json({
         message: "Unauthorized: ID token is invalid",
       });
