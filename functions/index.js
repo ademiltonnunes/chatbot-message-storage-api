@@ -7,14 +7,10 @@ admin.initializeApp({
 
 // Import the functions from specific file
 const {user} = require("./api/user");
-const {startConversation} = require("./api/startConversation");
-const {addMessage} = require("./api/addMessage");
-const {chats} = require("./api/chats");
+const {conversation} = require("./api/conversation");
 const {swagger} = require("./api/swagger");
 
 // Export the functions
 exports.user = user;
-exports.startConversation = startConversation;
-exports.addMessage = addMessage;
-exports.chats = chats;
+exports.conversation = conversation;
 exports.swagger = swagger;
