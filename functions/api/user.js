@@ -143,4 +143,21 @@ user.put("/", authenticate, async (req, res) => {
   }
 });
 
+
+// Endpoint to logoff (revoke token)
+user.post("/logoff", authenticate, async (req, res) => {
+  const {uid} = req.user;
+
+  try {
+    // Revoke the user's refresh tokens
+    await admin.auth().revokeRefreshTokens(uid);
+    logger.log("User tokens revoked successfully for uid:", uid);
+
+    return res.status(200).json({ message: "User logged off successfully" });
+  } catch (error) {
+    logger.error("Error logging off user:", error);
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 exports.user = functions.https.onRequest(user);
