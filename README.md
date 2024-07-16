@@ -4,8 +4,8 @@ Quantum Bot Core is a robust Firebase-powered solution designed to efficiently m
 
 ## API Documentation
 
-For detailed documentation on using the endpoints, refer to [Quantum Bot Core API Documentation](https://us-central1-quantum-bot-core-72974.cloudfunctions.net/swagger).
-You can store messages using the API endpoint: [https://us-central1-quantum-bot-core-72974.cloudfunctions.net](https://us-central1-quantum-bot-core-72974.cloudfunctions.net)
+For detailed documentation on using the endpoints, refer to [Quantum Bot Core API Documentation](https://us-central1-quantumbotcore-d095e.cloudfunctions.net/swagger).
+You can store messages using the API endpoint: [https://us-central1-quantum-bot-core-72974.cloudfunctions.net](https://us-central1-quantumbotcore-d095e.cloudfunctions.net)
 
 ## Getting Started
 
