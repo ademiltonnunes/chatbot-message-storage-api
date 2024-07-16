@@ -33,7 +33,7 @@ To get the project up and running locally or on Firebase, follow these steps:
 - Disable Google Analytics for this project
 
 3. **Set Firebase Project ID:**
-- Find your Project ID (`quantum-bot-core-72974`for example) in Firebase Console
+- Find your Project ID (`quantum-bot-core-72974`for example) in Firebase Console. Usually in the Project setting, field Project ID.
 - Update `.firebaserc` with your Project ID
 
 4. **Set up Firebase Web App:**
