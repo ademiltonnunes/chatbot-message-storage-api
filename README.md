@@ -1,6 +1,6 @@
 # Quantum Bot Core
 
-Quantum Bot Core is a robust Firebase-powered solution designed to efficiently manage user interactions and securely store conversations for chatbot applications. This project leverages Firebase's real-time database capabilities and authentication features to ensure seamless operation and data security.
+Quantum Bot Core is a robust Firebase-powered solution designed to efficiently manage user interactions and securely store conversations for chatbot applications. This project leverages Firebase's real-time database capabilities and authentication features to ensure seamless operation and data security. For a full description about this project, please refer to [this link](https://pitch.com/v/quantumbotcore-project-xt2qv5)
 
 ## API Documentation
 
