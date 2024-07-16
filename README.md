@@ -87,7 +87,8 @@ To get the project up and running locally or on Firebase, follow these steps:
 
 ## Usage
 
-- After deployment, your Firebase project will be ready to manage user interactions and store chatbot conversations securely.
+- After deployment, your Firebase project will be ready to manage user interactions and store chatbot conversations securely. Refer to API documentation to know how to use the endpoints.
+- Most endpoints need tokens. In order to test the endpoint and generate a token, use the client-side example on [this link](https://quantumbotcore-d095e.web.app/). You have to create an user to authenticate and get the token.
 
 ## Contributing
 
